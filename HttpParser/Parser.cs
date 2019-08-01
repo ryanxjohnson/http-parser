@@ -19,7 +19,7 @@ namespace HttpParser
                 var requestCookies = new RequestCookies(lines);
                 var requestBody = new RequestBody(requestLine, lines);
 
-                var initial = new ParsedHttpRequest(options)
+                var parsed = new ParsedHttpRequest(options)
                 {
                     Url = requestLine.Url,
                     Uri = new Uri(requestLine.Url),
@@ -28,13 +28,13 @@ namespace HttpParser
                     RequestBody = requestBody.Body
                 };
 
-                initial.ApplyIgnoreOptions();
+                parsed.ApplyIgnoreOptions();
 
-                return initial;
+                return parsed;
             }
             catch (CouldNotParseHttpRequestException)
             {
-                throw;// new ArgumentException(ex.Message);   
+                throw;
             }
             catch (Exception)
             {

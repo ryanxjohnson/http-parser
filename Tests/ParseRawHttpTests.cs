@@ -64,6 +64,8 @@ namespace HttpParserTests
 
             Assert.AreEqual("https://httpbin.org/post", parsed.Url);
             Assert.AreEqual("POST", parsed.Headers["Method"]);
+            Assert.AreEqual(1, parsed.Cookies.Count);
+            Assert.AreEqual("chocchip", parsed.Cookies["ilikecookies"]);
             Assert.AreEqual(null, parsed.RequestBody);
         }
 
