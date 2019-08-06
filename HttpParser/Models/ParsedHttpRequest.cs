@@ -7,8 +7,8 @@ namespace HttpParser.Models
     public class ParsedHttpRequest
     {
         public string Url { get; set; }
-        public IDictionary<string, string> Headers { get; set; }
-        public IDictionary<string, string> Cookies { get; set; }
+        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, string> Cookies { get; set; }
         public string RequestBody { get; set; }
         public Uri Uri { get; set; }
         public CookieContainer CookieContainer { get; set; }
@@ -16,7 +16,7 @@ namespace HttpParser.Models
         private IgnoreHttpParserOptions ignoreHttpParserOptions;
         public ParsedHttpRequest(IgnoreHttpParserOptions options = null)
         {
-            this.ignoreHttpParserOptions = options;
+            ignoreHttpParserOptions = options;
         }
 
         public void ApplyIgnoreOptions()
