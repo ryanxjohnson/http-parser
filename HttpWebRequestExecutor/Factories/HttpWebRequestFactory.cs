@@ -1,14 +1,15 @@
-﻿using HttpBuilder.Interfaces;
+﻿using HttpBuilder;
+using HttpBuilder.Interfaces;
 using HttpParser.Models;
 
-namespace HttpBuilder.Factories
+namespace HttpWebRequestExecutor.Factories
 {
     public class HttpWebRequestFactory : IHttpWebRequestFactory
     {
         public IHttpWebRequest BuildRequest(ParsedHttpRequest parsed)
         {
             var request = HttpWebRequestBuilder.InitializeRequest(parsed);
-            return new FakeHttpWebRequest(request);
+            return new HttpWebRequestWrapper(request);
         }
     }
 }

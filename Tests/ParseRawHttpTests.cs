@@ -1,6 +1,7 @@
 ﻿using HttpParser;
 using HttpParser.Models;
 using NUnit.Framework;
+using Tests.FakeData;
 
 namespace HttpParserTests
 {

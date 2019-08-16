@@ -1,4 +1,4 @@
-﻿namespace HttpParserTests
+﻿namespace Tests.FakeData
 {
     public class FakeRawRequests
     {

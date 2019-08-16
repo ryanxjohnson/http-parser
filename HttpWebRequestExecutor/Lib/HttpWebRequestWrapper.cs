@@ -3,18 +3,18 @@ using System.Net;
 
 namespace HttpBuilder
 {
-    public class FakeHttpWebRequest : IHttpWebRequest
+    public class HttpWebRequestWrapper : IHttpWebRequest
     {
         private readonly HttpWebRequest request;
 
-        public FakeHttpWebRequest(HttpWebRequest request)
+        public HttpWebRequestWrapper(HttpWebRequest request)
         {
             this.request = request;
         }
 
         public IHttpWebResponse GetResponse()
         {
-            return new FakeHttpWebResponse((HttpWebResponse)request.GetResponse());
+            return new HttpWebResponseWrapper((HttpWebResponse)request.GetResponse());
         }
     }
 }

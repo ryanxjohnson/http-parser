@@ -6,11 +6,11 @@ using System.Net;
 
 namespace HttpBuilder
 {
-    public class FakeHttpWebResponse : IHttpWebResponse
+    public class HttpWebResponseWrapper : IHttpWebResponse
     {
         private HttpWebResponse response;
 
-        public FakeHttpWebResponse(HttpWebResponse response)
+        public HttpWebResponseWrapper(HttpWebResponse response)
         {
             this.response = response;
         }

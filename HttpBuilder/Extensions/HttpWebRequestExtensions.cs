@@ -11,7 +11,14 @@ namespace HttpBuilder.Extensions
         {
             foreach (var header in headers)
             {
-                request.SetHttpHeader(header.Key, header.Value);
+                try
+                {
+                    request.SetHttpHeader(header.Key, header.Value);
+                }
+                catch(Exception)
+                {
+                    Console.WriteLine($"Could not set HTTP header {header.Key}: {header.Value}");
+                }
             }
         }
 

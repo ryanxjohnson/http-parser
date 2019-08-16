@@ -1,13 +1,13 @@
 ﻿using HttpBuilder;
 using HttpBuilder.Interfaces;
 using HttpParser;
-using HttpParserTests;
 using NUnit.Framework;
 using System.IO;
 using System.Text;
 using Moq;
 using HttpParser.Models;
 using HttpWebRequestExecutor.Models;
+using Tests.FakeData;
 
 namespace Tests
 {
@@ -29,13 +29,13 @@ namespace Tests
             // arrange
             var expected = "hello world";
 
-            var response = new Moq.Mock<IHttpWebResponse>();
+            var response = new Mock<IHttpWebResponse>();
             response.Setup(s => s.GetResponseStream()).Returns(FakeStream(expected));
 
-            var request = new Moq.Mock<IHttpWebRequest>();
+            var request = new Mock<IHttpWebRequest>();
             request.Setup(c => c.GetResponse()).Returns(response.Object);
 
-            var factory = new Moq.Mock<IHttpWebRequestFactory>();
+            var factory = new Mock<IHttpWebRequestFactory>();
             factory.Setup(c => c.BuildRequest(It.IsAny<ParsedHttpRequest>())).Returns(request.Object);
 
             var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithoutQueryString);
@@ -63,13 +63,13 @@ namespace Tests
             // arrange
             var expected = "hello world";
 
-            var response = new Moq.Mock<IHttpWebResponse>();
+            var response = new Mock<IHttpWebResponse>();
             response.Setup(s => s.GetParsedWebResponse()).Returns(FakeParsedWebResponse(expected));
 
-            var request = new Moq.Mock<IHttpWebRequest>();
+            var request = new Mock<IHttpWebRequest>();
             request.Setup(c => c.GetResponse()).Returns(response.Object);
 
-            var factory = new Moq.Mock<IHttpWebRequestFactory>();
+            var factory = new Mock<IHttpWebRequestFactory>();
             factory.Setup(c => c.BuildRequest(It.IsAny<ParsedHttpRequest>())).Returns(request.Object);
 
             var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithoutQueryString);
