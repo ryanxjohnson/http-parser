@@ -1,6 +1,7 @@
 ﻿using HttpBuilder;
-using HttpBuilder.Interfaces;
 using HttpParser.Models;
+using HttpWebRequestExecutor.Interfaces;
+using HttpWebRequestExecutor.Lib;
 
 namespace HttpWebRequestExecutor.Factories
 {
@@ -8,7 +9,7 @@ namespace HttpWebRequestExecutor.Factories
     {
         public IHttpWebRequest BuildRequest(ParsedHttpRequest parsed)
         {
-            var request = HttpWebRequestBuilder.InitializeRequest(parsed);
+            var request = HttpWebRequestBuilder.InitializeWebRequest(parsed);
             return new HttpWebRequestWrapper(request);
         }
     }

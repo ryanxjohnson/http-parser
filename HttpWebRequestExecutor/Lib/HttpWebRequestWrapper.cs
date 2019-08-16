@@ -1,9 +1,9 @@
-﻿using HttpBuilder.Interfaces;
+﻿using HttpWebRequestExecutor.Interfaces;
 using System.Net;
 
-namespace HttpBuilder
+namespace HttpWebRequestExecutor.Lib
 {
-    public class HttpWebRequestWrapper : IHttpWebRequest
+    internal class HttpWebRequestWrapper : IHttpWebRequest
     {
         private readonly HttpWebRequest request;
 

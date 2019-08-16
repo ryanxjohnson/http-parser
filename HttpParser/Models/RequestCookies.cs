@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace HttpParser.Models
 {
-    public class RequestCookies
+    internal class RequestCookies
     {
         public Dictionary<string, string> ParsedCookies = new Dictionary<string, string>();
         public RequestCookies(string[] lines)

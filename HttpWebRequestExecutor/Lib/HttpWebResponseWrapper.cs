@@ -1,12 +1,12 @@
-﻿using HttpBuilder.Interfaces;
+﻿using HttpWebRequestExecutor.Interfaces;
 using HttpWebRequestExecutor.Models;
 using System;
 using System.IO;
 using System.Net;
 
-namespace HttpBuilder
+namespace HttpWebRequestExecutor.Lib
 {
-    public class HttpWebResponseWrapper : IHttpWebResponse
+    internal class HttpWebResponseWrapper : IHttpWebResponse
     {
         private HttpWebResponse response;
 

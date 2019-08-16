@@ -1,7 +1,5 @@
-﻿using HttpWebRequestExecutor.Factories;
+﻿using HttpWebRequestExecutor.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HttpHandler
 {
@@ -16,11 +14,11 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/a
 Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9";
 
-        private HttpWebRequestFactory factory;
+        private readonly IHttpWebRequestFactory factory;
 
-        public RequestRunner()
+        public RequestRunner(IHttpWebRequestFactory factory)
         {
-            factory = new HttpWebRequestFactory();
+            this.factory = factory;
         }
 
         public void Run()
@@ -29,7 +27,7 @@ Accept-Language: en-US,en;q=0.9";
             var req = factory.BuildRequest(parsed);
 
             var resp = req.GetResponse();
-            Console.WriteLine(resp.GetParsedWebResponse());
+            Console.WriteLine(resp.GetParsedWebResponse().ResponseText);
         }
     }
 }

@@ -70,7 +70,7 @@ namespace HttpParserTests
             Assert.AreEqual(null, parsed.RequestBody);
         }
 
-        [TestCase(FakeRawRequests.BadlyFormattedRequest1, "URL is not in a valid format: www.httpbin.org/get")]
+        [TestCase(FakeRawRequests.BadlyFormattedRequest1, "URL is not in a valid format Method: SetUrl() Data: www.httpbin.org/get")]
         public void Should_Throw_For_Badly_Formatted_Request(string raw, string expectedMessage)
         {
             var ex = Assert.Throws<CouldNotParseHttpRequestException>(() => Parser.ParseRawRequest(raw));

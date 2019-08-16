@@ -24,7 +24,7 @@ namespace HttpParserTests
             var line = new[] { "PUT https://www.example.com HTTP/1.1" };
 
             var ex = Assert.Throws<CouldNotParseHttpRequestException>(() => new RequestLine(line));
-            Assert.AreEqual("Not a valid HTTP Verb: PUT", ex.Message);
+            Assert.AreEqual("Not a valid HTTP Verb Method: SetHttpMethod() Data: PUT", ex.Message);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace HttpParserTests
             var line = new[] { "GET www.example.com HTTP/1.1" };
 
             var ex = Assert.Throws<CouldNotParseHttpRequestException>(() => new RequestLine(line));
-            Assert.AreEqual("URL is not in a valid format: www.example.com", ex.Message);
+            Assert.AreEqual("URL is not in a valid format Method: SetUrl() Data: www.example.com", ex.Message);
         }
     }
 }

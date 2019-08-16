@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HttpParser.Models
 {
-    public class RequestHeaders
+    internal class RequestHeaders
     {
         public Dictionary<string, string> Headers;
 

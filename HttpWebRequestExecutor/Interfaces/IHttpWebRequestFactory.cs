@@ -1,6 +1,6 @@
 ﻿using HttpParser.Models;
 
-namespace HttpBuilder.Interfaces
+namespace HttpWebRequestExecutor.Interfaces
 {
     public interface IHttpWebRequestFactory
     {

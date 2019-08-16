@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HttpWebRequestExecutor.Factories;
+using HttpWebRequestExecutor.Interfaces;
+using System;
 using System.Net;
 
 namespace HttpHandler
@@ -7,10 +9,10 @@ namespace HttpHandler
     {
         static void Main(string[] args)
         {
-            var rr = new RequestRunner();
-
             try
             {
+                IHttpWebRequestFactory factory = new HttpWebRequestFactory();
+                var rr = new RequestRunner(factory);
                 rr.Run();
             }
             catch(WebException wex)

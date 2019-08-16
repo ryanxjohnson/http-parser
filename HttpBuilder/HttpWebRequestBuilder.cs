@@ -7,7 +7,7 @@ namespace HttpBuilder
 {
     public static class HttpWebRequestBuilder
     {
-        public static HttpWebRequest InitializeRequest(ParsedHttpRequest parsed, Action<HttpWebRequest> callback = null)
+        public static HttpWebRequest InitializeWebRequest(ParsedHttpRequest parsed, Action<HttpWebRequest> callback = null)
         {
             var req = (HttpWebRequest)WebRequest.Create(parsed.Url);
             req.SetHttpHeaders(parsed.Headers);

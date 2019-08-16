@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace HttpBuilder.Interfaces
+namespace HttpWebRequestExecutor.Interfaces
 {
     public interface IHttpWebResponse : IDisposable
     {

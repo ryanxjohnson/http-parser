@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HttpBuilder.Extensions
 {
-    public static class HttpWebRequestExtensions
+    internal static class HttpWebRequestExtensions
     {
         public static void SetHttpHeaders(this HttpWebRequest request, Dictionary<string, string> headers)
         {

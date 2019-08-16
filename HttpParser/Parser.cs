@@ -32,12 +32,14 @@ namespace HttpParser
 
                 return parsed;
             }
-            catch (CouldNotParseHttpRequestException)
+            catch (CouldNotParseHttpRequestException c)
             {
+                Console.WriteLine($"Could not parse the raw request. {c.Message}");
                 throw;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine($"Unhandled error parsing the raw request: {raw}\r\nError {e.Message}");
                 throw;
             }
         }

@@ -1,5 +1,4 @@
 ﻿using HttpBuilder;
-using HttpBuilder.Interfaces;
 using HttpParser;
 using NUnit.Framework;
 using System.IO;
@@ -8,6 +7,7 @@ using Moq;
 using HttpParser.Models;
 using HttpWebRequestExecutor.Models;
 using Tests.FakeData;
+using HttpWebRequestExecutor.Interfaces;
 
 namespace Tests
 {
@@ -18,7 +18,7 @@ namespace Tests
         public void Should_Build_Get()
         {
             var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithoutQueryString);
-            var req = HttpWebRequestBuilder.InitializeRequest(parsed);
+            var req = HttpWebRequestBuilder.InitializeWebRequest(parsed);
 
             Assert.AreEqual("System.Net.HttpWebRequest", req.GetType().ToString());
         }

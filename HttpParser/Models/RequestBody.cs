@@ -2,7 +2,7 @@
 
 namespace HttpParser.Models
 {
-    public class RequestBody
+    internal class RequestBody
     {
         public string Body { get; set; }
 

@@ -10,7 +10,7 @@ namespace HttpParser.Models
         public string Url { get; set; }
         public string HttpVersion { get; set; }
 
-        private string[] validHttpVerbs = { "GET", "POST" };
+        private readonly string[] validHttpVerbs = { "GET", "POST" };
 
         public RequestLine(string[] lines)
         {
@@ -25,23 +25,23 @@ namespace HttpParser.Models
         private void ValidateRequestLine(string[] firstLine)
         {
             if (firstLine.Length != 3)
-                throw new CouldNotParseHttpRequestException("Request Line is not in a valid format");
+                throw new CouldNotParseHttpRequestException("Request Line is not in a valid format", "ValidateRequestLine", string.Join(" ", firstLine));
         }
 
         private void SetHttpMethod(string method)
         {
-            method = method.Trim();
+            method = method.Trim().ToUpper();
 
-            if (!validHttpVerbs.Contains(method.ToUpper()))
-                throw new CouldNotParseHttpRequestException($"Not a valid HTTP Verb: {method}");
+            if (!validHttpVerbs.Contains(method))
+                throw new CouldNotParseHttpRequestException($"Not a valid HTTP Verb", "SetHttpMethod", method);
 
             Method = method;
         }
 
         private void SetUrl(string url)
         {
-            if (!IsValidUri(url, out Uri uriResult))
-                throw new CouldNotParseHttpRequestException($"URL is not in a valid format: {url}");
+            if (!IsValidUri(url, out Uri _))
+                throw new CouldNotParseHttpRequestException($"URL is not in a valid format", "SetUrl", url);
 
             Url = url.Trim();
         }
