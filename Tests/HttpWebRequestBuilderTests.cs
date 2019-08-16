@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using Moq;
 using HttpParser.Models;
-using System.Net;
+using HttpWebRequestExecutor.Models;
 
 namespace Tests
 {
@@ -57,6 +57,37 @@ namespace Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void Should_Get_Fake_ParsedWebResponse()
+        {
+            // arrange
+            var expected = "hello world";
+
+            var response = new Moq.Mock<IHttpWebResponse>();
+            response.Setup(s => s.GetParsedWebResponse()).Returns(FakeParsedWebResponse(expected));
+
+            var request = new Moq.Mock<IHttpWebRequest>();
+            request.Setup(c => c.GetResponse()).Returns(response.Object);
+
+            var factory = new Moq.Mock<IHttpWebRequestFactory>();
+            factory.Setup(c => c.BuildRequest(It.IsAny<ParsedHttpRequest>())).Returns(request.Object);
+
+            var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithoutQueryString);
+
+            // act
+            var actualRequest = factory.Object.BuildRequest(parsed);
+
+            string actual;
+
+            using (var httpWebResponse = actualRequest.GetResponse())
+            {
+                actual = httpWebResponse.GetParsedWebResponse().ResponseText;
+            }
+
+            // assert
+            Assert.AreEqual(expected, actual);
+        }
+
         private static MemoryStream FakeStream(string expected)
         {
             var expectedBytes = Encoding.UTF8.GetBytes(expected);
@@ -65,6 +96,14 @@ namespace Tests
             responseStream.Seek(0, SeekOrigin.Begin);
 
             return responseStream;
+        }
+
+        private static ParsedWebResponse FakeParsedWebResponse(string responseText)
+        {
+            return new ParsedWebResponse()
+            {
+                ResponseText = responseText
+            };
         }
     }
 }

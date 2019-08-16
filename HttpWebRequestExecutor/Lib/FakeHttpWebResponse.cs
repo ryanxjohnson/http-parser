@@ -1,4 +1,5 @@
 ﻿using HttpBuilder.Interfaces;
+using HttpWebRequestExecutor.Models;
 using System;
 using System.IO;
 using System.Net;
@@ -17,6 +18,11 @@ namespace HttpBuilder
         public Stream GetResponseStream()
         {
             return response.GetResponseStream();
+        }
+
+        public ParsedWebResponse GetParsedWebResponse()
+        {
+            return new ParsedWebResponse(response);
         }
 
         public void Dispose()

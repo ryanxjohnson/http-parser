@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HttpWebRequestExecutor.Models;
+using System;
 using System.IO;
 
 namespace HttpBuilder.Interfaces
@@ -6,5 +7,6 @@ namespace HttpBuilder.Interfaces
     public interface IHttpWebResponse : IDisposable
     {
         Stream GetResponseStream();
+        ParsedWebResponse GetParsedWebResponse();
     }
 }

@@ -15,6 +15,7 @@ namespace HttpWebRequestExecutor.Models
         public Uri ResponseUri { get; set; }
         public Dictionary<string, string[]> ResponseHeaders { get; set; }
 
+        public ParsedWebResponse() { }
         public ParsedWebResponse(HttpWebResponse response)
         {
             ResponseText = response.ResponseString();

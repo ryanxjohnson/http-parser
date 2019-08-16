@@ -5,9 +5,8 @@ namespace HttpBuilder
 {
     public class FakeHttpWebRequest : IHttpWebRequest
     {
-        public string Method { get => request.Method; set => request.Method = value; }
-
         private readonly HttpWebRequest request;
+
         public FakeHttpWebRequest(HttpWebRequest request)
         {
             this.request = request;
