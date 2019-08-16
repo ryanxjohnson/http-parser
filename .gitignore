@@ -30,3 +30,4 @@ UpgradeLog.XML
 # utilities
 !nunit*.exe
 !octo.exe
+*.nuspec
