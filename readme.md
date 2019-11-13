@@ -12,7 +12,7 @@ IgnoreSerialization options allows the client to ignore certain headers like coo
 
 Sample Raw Web Request
 ```
-var sampleGet = @"
+var raw = "
 GET https://httpbin.org/get HTTP/1.1
 Host: httpbin.org
 Connection: keep-alive
@@ -23,40 +23,25 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9";
 ```
 
-#### Note on IgnoreSerializationOptions:
-You can specify what the parser should not serialize. Pass IgnoreSerializationOptions as an optional parameter to the parser. For example, it might not make sense to serialize cookies if you are dynamically adding them later.
+#### IgnoreHttpParserOptions:
+You can specify what the parser should not serialize. Pass IgnoreHttpParserOptions as an optional parameter to the parser. For example, it might not make sense to parse the request body if you are replacing with it with another value.
 
 ```
-IgnoreSerializationOptions options = new IgnoreSerializationOptions(new [] { IgnoreSerializationOptionKey.Cookie });
+IgnoreHttpParserOptions options = new IgnoreHttpParserOptions { IgnoreRequestBody = true };
 ```
 
-or
-
+### Parse to ParsedRequest object:
 ```
-IgnoreSerializationOptions options = new IgnoreSerializationOptions();
-options.IgnoreKey(IgnoreSerializationOptionKey.Cookie);
-```
-
-##### SerializationOptionKeys
-```
-IgnoreSerializationOptionKey.Uri
-IgnoreSerializationOptionKey.Headers
-IgnoreSerializationOptionKey.Cookie
-IgnoreSerializationOptionKey.RequestData
-```
-
-### Parse to ParsedRequest Object:
-```
-var parsed = HttpParser.GetParsedRequest(sampleGet);
+var parsed = Parser.ParseRawRequest(raw);
 ```
 
 ## Build .NET HttpWebRequest Usage:
 
 ```
-var request = RequestBuilder.CreateWebRequestFromParsedRequest(parsed);
+HttpWebRequest request = HttpWebRequestBuilder.InitializeWebRequest(parsed);
 ```
 
-## Using Callback during BuildRequest
+## Invoking callback in InitializeWebRequest()
 Calling `request.GetRequestStream()` closes the request for adding headers, so unless you are positive you don't need to add any new headers after writing the request body, use the call back to defer this to your client
 
 ### What this looks like:
@@ -71,13 +56,13 @@ callback?.Invoke(request);
 request.WritePostDataToRequestStream(requestBody);
 ```
 
-### Sample RequestBuilder with callback
+### Sample RequestBuilder invoking callback
 ```
 void ClientBuildRequest()
 {
 // parse raw request...
 
-var request = parsed.CreateWebRequestFromParsedRequest(AddMoreDynamicHeaders);
+HttpWebRequest request = HttpWebRequestBuilder.InitializeWebRequest(parsed, AddMoreDynamicHeaders);
 
 // do stuff with the completed request
 }
@@ -90,8 +75,22 @@ static void AddMoreDynamicHeaders(HttpWebRequest request)
 
 ### Execute Web Request and capture response:
 ```
-string response = request.GetResponseAsString();
+using (var httpWebResponse = request.GetResponse())
+{
+	httpWebResponse.GetParsedWebResponse();
+}
 ```
+
+### ParsedResponse is a flattened version of HttpWebResponse
+```
+string ResponseText 
+int StatusCode
+string StatusDescription
+string Cookies
+Uri ResponseUri
+Dictionary<string, string[]> ResponseHeaders
+```
+
 
 ### Mocking Web Requests in unit tests with Moq
 
