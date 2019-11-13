@@ -18,11 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HttpBuilder\HttpBuilder.csproj" />
-    <ProjectReference Include="..\HttpParser\HttpParser.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\..\..\..\Desktop\mitlicesnse.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

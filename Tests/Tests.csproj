@@ -13,8 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HttpBuilder\HttpBuilder.csproj" />
-    <ProjectReference Include="..\HttpParser\HttpParser.csproj" />
     <ProjectReference Include="..\HttpWebRequestExecutor\HttpWebRequestExecutor.csproj" />
   </ItemGroup>
 
