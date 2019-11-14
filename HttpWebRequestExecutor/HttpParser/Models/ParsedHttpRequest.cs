@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 
 namespace HttpParser.Models
 {
@@ -40,6 +42,39 @@ namespace HttpParser.Models
             {
                 RequestBody = null;
             }
+        }
+
+        public override string ToString()
+        {
+            var method = Headers["Method"];
+            var version = Headers["HttpVersion"];
+
+            var sb = new StringBuilder($"{method} {Url} {version}{Environment.NewLine}");
+
+            var headersToIgnore = new List<string> { "Method", "HttpVersion" };
+            foreach(var header in Headers)
+            {
+                if (headersToIgnore.Contains(header.Key)) continue;
+                sb.Append($"{header.Key}: {header.Value}{Environment.NewLine}");
+            }
+
+            if (Cookies.Count > 0)
+            {
+                var c = new StringBuilder("Cookie:");
+                c.Append(string.Join(";", Cookies.Select(cookie => $" {cookie.Key}={cookie.Value};")));
+
+                var cookies = c.ToString().TrimEnd(';');
+
+                sb.Append($"{cookies}{Environment.NewLine}");
+            }
+            
+            if (method == "POST")
+            {
+                sb.Append(Environment.NewLine);
+                sb.Append(RequestBody);
+            }
+
+            return sb.ToString().Trim();
         }
     }
 }

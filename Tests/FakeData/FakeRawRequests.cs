@@ -44,7 +44,7 @@ Host: httpbin.org
 User-Agent: curl/7.54.1
 Accept: */*
 Content-Type: application/x-www-form-urlencoded
-Cookies: ilikecookies:chocchip
+Cookie: ilikecookies:chocchip
 
 helloworld
 
