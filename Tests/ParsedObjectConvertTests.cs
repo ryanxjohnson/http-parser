@@ -18,7 +18,7 @@ namespace Tests
         public void Should_Strip_Cookies(string input)
         {
             var parsed = HttpParser.Parser.ParseRawRequest(input, new HttpParser.Models.IgnoreHttpParserOptions { IgnoreCookies = true }); ;
-
+            
             Assert.AreEqual(requestCookiesStripped, parsed.ToString());
         }
 

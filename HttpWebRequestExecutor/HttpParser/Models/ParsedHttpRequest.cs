@@ -52,6 +52,8 @@ namespace HttpParser.Models
             var sb = new StringBuilder($"{method} {Url} {version}{Environment.NewLine}");
 
             var headersToIgnore = new List<string> { "Method", "HttpVersion" };
+            if (Cookies == null) headersToIgnore.Add("Cookie");
+
             foreach(var header in Headers)
             {
                 if (headersToIgnore.Contains(header.Key)) continue;
