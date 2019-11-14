@@ -58,14 +58,13 @@ namespace HttpParser.Models
                 sb.Append($"{header.Key}: {header.Value}{Environment.NewLine}");
             }
 
-            if (Cookies.Count > 0)
+            if (Cookies?.Count > 0)
             {
-                var c = new StringBuilder("Cookie:");
-                c.Append(string.Join(";", Cookies.Select(cookie => $" {cookie.Key}={cookie.Value};")));
+                var cookies = string.Join(";", Cookies
+                    .Select(cookie => $" {cookie.Key}={cookie.Value};"))
+                    .TrimEnd(';');
 
-                var cookies = c.ToString().TrimEnd(';');
-
-                sb.Append($"{cookies}{Environment.NewLine}");
+                sb.Append($"Cookie:{cookies}{Environment.NewLine}");
             }
             
             if (method == "POST")
