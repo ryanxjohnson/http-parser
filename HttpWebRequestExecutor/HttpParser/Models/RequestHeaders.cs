@@ -31,7 +31,7 @@ namespace HttpParser.Models
             {
                 var (key, value) = GetHeader(lines[i]);
 
-                if (key == "Cookies") continue;
+                if (key == "Cookie") continue;
 
                 Headers[key] = value;
             }

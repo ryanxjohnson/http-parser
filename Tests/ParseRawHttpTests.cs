@@ -78,9 +78,19 @@ namespace HttpParserTests
             Assert.AreEqual(expectedMessage, ex.Message);
         }
 
+        [Test]
         public void Should_Not_Throw_For_Extra_Lines()
         {
             Assert.DoesNotThrow(() => Parser.ParseRawRequest(FakeRawRequests.BadlyFormattedRequest2));
+        }
+
+        [Test]
+        public void Should_Parse_Cookie_In_Wrong_Place()
+        {
+            var raw = FakeRawRequests.RequestWithCookiesInTheWrongSpot;
+            var parsed = Parser.ParseRawRequest(raw);
+
+            System.Console.WriteLine(parsed.Cookies.Count);
         }
     }
 }

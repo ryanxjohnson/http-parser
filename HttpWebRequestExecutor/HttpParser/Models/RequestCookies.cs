@@ -28,7 +28,7 @@ namespace HttpParser.Models
             var matches = new Regex(@"Cookie:(?<Cookie>(.+))", RegexOptions.Singleline).Match(cookiesLine);
             var cookies = matches.Groups["Cookie"].ToString().Trim().Split(';');
 
-            if (cookies.Length < 1 || cookies.Contains(""))
+            if (cookies?.Length < 1 || cookies.Contains(""))
             {
                 return;
             }
