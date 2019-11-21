@@ -18,6 +18,6 @@ jobs:
     - name: Build NuGet Package
       run: dotnet pack ./HttpWebRequestExecutor/HttpWebRequestExecutor.csproj --configuration Release -o NuGetPackages
     - name: Deploy NuGet Package
+      env:
+        SECRET_TOKEN: ${{ secrets.NUGET_API_KEY }}
       run: dotnet nuget push ./HttpWebRequestExecutor/NuGetPackages/HttpWebRequestExecutor.1.1.5.nupkg -k $ -s https://api.nuget.org/v3/index.json
-    - name: print
-      run: cat $
