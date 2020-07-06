@@ -6,6 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Generates the build version
+      id: version
+      run: echo "::set-output name=version::$(date +'%Y.%m.%d'.$GITHUB_RUN_NUMBER)"
+    
+    - name: Print Version Steps
+      run: echo ${{steps.version.output.version}}
+
+    - name: Print Version Env
+      run: echo $version
+      
     - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
