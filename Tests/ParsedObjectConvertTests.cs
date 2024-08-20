@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Tests
 {
@@ -12,15 +11,15 @@ namespace Tests
         {
             var parsed = HttpParser.Parser.ParseRawRequest(input);
 
-            parsed.ToString().Should().Be(input);
+            Assert.AreEqual(input, parsed.ToString());
         }
 
         [TestCase(FakeData.FakeRawRequests.PostWithRequestBody)]
         public void Should_Strip_Cookies(string input)
         {
             var parsed = HttpParser.Parser.ParseRawRequest(input, new HttpParser.Models.IgnoreHttpParserOptions { IgnoreCookies = true }); ;
-            
-            parsed.ToString().Should().BeEquivalentTo(requestCookiesStripped);
+
+            Assert.AreEqual(requestCookiesStripped, parsed.ToString());
         }
 
         private string requestCookiesStripped = @"POST https://httpbin.org/post HTTP/1.1
