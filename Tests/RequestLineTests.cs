@@ -1,6 +1,6 @@
 ﻿using HttpParser.Models;
 using NUnit.Framework;
-
+using FluentAssertions;
 namespace HttpParserTests
 {
     [TestFixture]
@@ -13,9 +13,9 @@ namespace HttpParserTests
 
             var requestLine = new RequestLine(line);
 
-            Assert.AreEqual("GET", requestLine.Method);
-            Assert.AreEqual("https://www.example.com", requestLine.Url);
-            Assert.AreEqual("HTTP/1.1", requestLine.HttpVersion);
+            requestLine.Method.Should().BeEquivalentTo("GET");
+            requestLine.Url.Should().BeEquivalentTo("https://www.example.com");
+            requestLine.HttpVersion.Should().BeEquivalentTo("HTTP/1.1");
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace HttpParserTests
             var line = new[] { "PUT https://www.example.com HTTP/1.1" };
 
             var ex = Assert.Throws<CouldNotParseHttpRequestException>(() => new RequestLine(line));
-            Assert.AreEqual("Not a valid HTTP Verb Method: SetHttpMethod() Data: PUT", ex.Message);
+            ex.Message.Should().BeEquivalentTo("Not a valid HTTP Verb Method: SetHttpMethod() Data: PUT");
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace HttpParserTests
             var line = new[] { "GET www.example.com HTTP/1.1" };
 
             var ex = Assert.Throws<CouldNotParseHttpRequestException>(() => new RequestLine(line));
-            Assert.AreEqual("URL is not in a valid format Method: SetUrl() Data: www.example.com", ex.Message);
+            ex.Message.Should().BeEquivalentTo("URL is not in a valid format Method: SetUrl() Data: www.example.com");
         }
     }
 }
