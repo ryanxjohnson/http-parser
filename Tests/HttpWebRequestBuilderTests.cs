@@ -8,6 +8,7 @@ using HttpParser.Models;
 using HttpWebRequestExecutor.Models;
 using Tests.FakeData;
 using HttpWebRequestExecutor.Interfaces;
+using FluentAssertions;
 
 namespace Tests
 {
@@ -20,7 +21,7 @@ namespace Tests
             var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithoutQueryString);
             var req = HttpWebRequestBuilder.InitializeWebRequest(parsed);
 
-            Assert.AreEqual("System.Net.HttpWebRequest", req.GetType().ToString());
+            req.Should().BeOfType<System.Net.HttpWebRequest>();
         }
 
         [Test]
@@ -54,7 +55,7 @@ namespace Tests
             }
 
             // assert
-            Assert.AreEqual(expected, actual);
+            actual.Should().Be(expected);
         }
 
         [Test]
@@ -85,7 +86,7 @@ namespace Tests
             }
 
             // assert
-            Assert.AreEqual(expected, actual);
+            actual.Should().BeEquivalentTo(expected);
         }
 
         private static MemoryStream FakeStream(string expected)

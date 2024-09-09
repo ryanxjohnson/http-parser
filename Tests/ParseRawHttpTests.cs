@@ -1,4 +1,5 @@
-﻿using HttpParser;
+﻿using FluentAssertions;
+using HttpParser;
 using HttpParser.Models;
 using NUnit.Framework;
 using Tests.FakeData;
@@ -12,10 +13,9 @@ namespace HttpParserTests
         public void Should_Parse_Get()
         {
             var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithoutQueryString);
-
-            Assert.AreEqual("https://httpbin.org/get", parsed.Url);
-            Assert.AreEqual("GET", parsed.Headers["Method"]);
-            Assert.AreEqual(null, parsed.RequestBody);
+            parsed.Url.Should().BeEquivalentTo("https://httpbin.org/get");
+            parsed.Headers["Method"].Should().BeEquivalentTo("GET");
+            parsed.RequestBody.Should().BeNull();
         }
 
         [Test]
@@ -23,9 +23,9 @@ namespace HttpParserTests
         {
             var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithQueryString);
 
-            Assert.AreEqual("https://httpbin.org/get?name=ryan", parsed.Url);
-            Assert.AreEqual("GET", parsed.Headers["Method"]);
-            Assert.AreEqual("name=ryan", parsed.RequestBody);
+            parsed.Url.Should().BeEquivalentTo("https://httpbin.org/get?name=ryan");
+            parsed.Headers["Method"].Should().BeEquivalentTo("GET");
+            parsed.RequestBody.Should().BeEquivalentTo("name=ryan");
         }
 
         [Test]
@@ -38,9 +38,9 @@ namespace HttpParserTests
 
             var parsed = Parser.ParseRawRequest(FakeRawRequests.GetWithQueryString, options);
 
-            Assert.AreEqual("https://httpbin.org/get?name=ryan", parsed.Url);
-            Assert.AreEqual("GET", parsed.Headers["Method"]);
-            Assert.AreEqual(null, parsed.RequestBody);
+            parsed.Url.Should().BeEquivalentTo("https://httpbin.org/get?name=ryan");
+            parsed.Headers["Method"].Should().BeEquivalentTo("GET");
+            parsed.RequestBody.Should().BeNull();
         }
 
         [Test]
@@ -48,9 +48,9 @@ namespace HttpParserTests
         {
             var parsed = Parser.ParseRawRequest(FakeRawRequests.PostWithRequestBody);
 
-            Assert.AreEqual("https://httpbin.org/post", parsed.Url);
-            Assert.AreEqual("POST", parsed.Headers["Method"]);
-            Assert.AreEqual("helloworld", parsed.RequestBody);
+            parsed.Url.Should().BeEquivalentTo("https://httpbin.org/post");
+            parsed.Headers["Method"].Should().BeEquivalentTo("POST");
+            parsed.RequestBody.Should().BeEquivalentTo("helloworld");
         }
 
         [Test]
@@ -63,11 +63,11 @@ namespace HttpParserTests
 
             var parsed = Parser.ParseRawRequest(FakeRawRequests.PostWithRequestBody, options);
 
-            Assert.AreEqual("https://httpbin.org/post", parsed.Url);
-            Assert.AreEqual("POST", parsed.Headers["Method"]);
-            Assert.AreEqual(1, parsed.Cookies.Count);
-            Assert.AreEqual("chocchip", parsed.Cookies["ilikecookies"]);
-            Assert.AreEqual(null, parsed.RequestBody);
+            parsed.Url.Should().BeEquivalentTo("https://httpbin.org/post");
+            parsed.Headers["Method"].Should().BeEquivalentTo("POST");
+            parsed.Cookies.Should().HaveCount(1);
+            parsed.Cookies["ilikecookies"].Should().BeEquivalentTo("chocchip");
+            parsed.RequestBody.Should().BeNull();
         }
 
         [TestCase(FakeRawRequests.BadlyFormattedRequest1, "URL is not in a valid format Method: SetUrl() Data: www.httpbin.org/get")]
@@ -75,7 +75,7 @@ namespace HttpParserTests
         {
             var ex = Assert.Throws<CouldNotParseHttpRequestException>(() => Parser.ParseRawRequest(raw));
 
-            Assert.AreEqual(expectedMessage, ex.Message);
+            ex.Message.Should().Be(expectedMessage);
         }
 
         [Test]
