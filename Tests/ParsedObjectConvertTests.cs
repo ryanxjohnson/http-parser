@@ -11,7 +11,7 @@ namespace Tests
         {
             var parsed = HttpParser.Parser.ParseRawRequest(input);
 
-            Assert.AreEqual(input, parsed.ToString());
+            Assert.That(input, Is.EqualTo(parsed.ToString()));
         }
 
         [TestCase(FakeData.FakeRawRequests.PostWithRequestBody)]
@@ -19,10 +19,10 @@ namespace Tests
         {
             var parsed = HttpParser.Parser.ParseRawRequest(input, new HttpParser.Models.IgnoreHttpParserOptions { IgnoreCookies = true }); ;
 
-            Assert.AreEqual(requestCookiesStripped, parsed.ToString());
+            Assert.That(requestCookiesStripped, Is.EqualTo(parsed.ToString()));
         }
 
-        private string requestCookiesStripped = @"POST https://httpbin.org/post HTTP/1.1
+        private readonly string requestCookiesStripped = @"POST https://httpbin.org/post HTTP/1.1
 Host: httpbin.org
 User-Agent: curl/7.54.1
 Accept: */*
