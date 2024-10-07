@@ -32,5 +32,8 @@ jobs:
     - name: Build NuGet Package
       run: dotnet pack ./HttpWebRequestExecutor/HttpWebRequestExecutor.csproj --configuration Release -o NuGetPackages -p:PackageVersion=${{ env.DATE }}
       
+    - name: List files in NuGetPackages
+      run: ls -la ./NuGetPackages
+      
     - name: Deploy NuGet Package
       run: dotnet nuget push ./NuGetPackages/HttpWebRequestExecutor.${{ env.DATE }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
