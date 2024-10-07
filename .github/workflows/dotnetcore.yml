@@ -35,5 +35,12 @@ jobs:
     - name: List files in NuGetPackages
       run: ls -la ./NuGetPackages
       
+    - name: Show Files in NuGetPackages
+      run: ls -la ./NuGetPackages
+
     - name: Deploy NuGet Package
-      run: dotnet nuget push ./NuGetPackages/HttpWebRequestExecutor.${{ env.DATE }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: |
+        echo "Pushing package ./NuGetPackages/HttpWebRequestExecutor.${{ env.DATE }}.nupkg"
+        dotnet nuget push ./NuGetPackages/HttpWebRequestExecutor.${{ env.DATE }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      env:
+        DATE: ${{ steps.date.outputs.date }}
