@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Get current date with leading zeros
+    - name: Get current date without leading zeros
       id: date
-      run: echo "::set-output name=date::$(date +'%Y.%m.%d').$GITHUB_RUN_NUMBER"
+      run: echo "::set-output name=date::$(date +'%Y.%-m.%-d').$GITHUB_RUN_NUMBER"
     
     - name: Test with environment variables
       run: echo $TAG_NAME
