@@ -5,17 +5,17 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Get current date
+    - name: Get current date with leading zeros
       id: date
-      run: echo "DATE=$(date +'%Y.%m.%d').$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
-
+      run: echo "::set-output name=date::$(date +'%Y.%m.%d').$GITHUB_RUN_NUMBER"
+    
     - name: Test with environment variables
       run: echo $TAG_NAME
       env:
-        TAG_NAME: ${{ env.DATE }}
-
+        TAG_NAME: ${{ steps.date.outputs.date }}
+      
     - uses: actions/checkout@v3
     
     - name: Setup .NET
@@ -30,15 +30,10 @@ jobs:
       run: dotnet test
       
     - name: Build NuGet Package
-      run: dotnet pack ./HttpWebRequestExecutor/HttpWebRequestExecutor.csproj --configuration Release -o NuGetPackages -p:PackageVersion=${{ env.DATE }}
+      run: dotnet pack ./HttpWebRequestExecutor/HttpWebRequestExecutor.csproj --configuration Release -o ./NuGetPackages -p:PackageVersion=${{ steps.date.outputs.date }}
       
-    - name: List files in NuGetPackages
+    - name: List generated files (for debugging)
       run: ls -la ./NuGetPackages
-      
-    - name: Show Files in NuGetPackages
-      run: ls -la ./NuGetPackages
-
+    
     - name: Deploy NuGet Package
-      run: |
-        echo "Pushing package ./NuGetPackages/HttpWebRequestExecutor.${{ env.DATE }}.nupkg"
-        dotnet nuget push ./NuGetPackages/HttpWebRequestExecutor.${{ env.DATE }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ./NuGetPackages/HttpWebRequestExecutor.${{ steps.date.outputs.date }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
