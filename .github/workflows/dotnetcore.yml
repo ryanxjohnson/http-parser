@@ -32,4 +32,4 @@ jobs:
       run: dotnet pack ./HttpWebRequestExecutor/HttpWebRequestExecutor.csproj --configuration Release -o NuGetPackages -p:PackageVersion=${{ steps.date.outputs.date }}
       
     - name: Deploy NuGet Package
-      run: dotnet nuget push ./http-parser/http-parser/NuGetPackages/HttpWebRequestExecutor.${{ steps.date.outputs.date }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ./NuGetPackages/HttpWebRequestExecutor.${{ steps.date.outputs.date }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
